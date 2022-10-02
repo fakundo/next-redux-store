@@ -1,0 +1,7 @@
+{
+  "entry": ["src/index.ts", "src/server.tsx"],
+  "format": ["esm"],
+  "sourcemap": true,
+  "minify": true,
+  "dts": true
+}
