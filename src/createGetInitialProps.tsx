@@ -7,11 +7,14 @@ export const createGetInitialProps =
   (createInitialState: CreateInitialState) => async (ctx: DocumentContext) => {
     const appData = { props: {} };
     const originalRenderPage = ctx.renderPage;
-    const enhanceComponent = (Component: any) => Component;
 
-    ctx.renderPage = () =>
+    ctx.renderPage = ({ enhanceApp, enhanceComponent }: any) =>
       originalRenderPage({
-        enhanceApp: (App: any) => (props: any) => ((appData.props = props), (<App {...props} />)),
+        enhanceApp: (App: any) => (props: any) => {
+          appData.props = props;
+          const EnhancedApp = enhanceApp?.(App) || App;
+          return <EnhancedApp {...props} />;
+        },
         enhanceComponent,
       });
 
@@ -24,9 +27,12 @@ export const createGetInitialProps =
     const state = await createInitialState(appData.props);
     const extraProps = { [PROP_NAME]: state };
 
-    ctx.renderPage = () =>
+    ctx.renderPage = ({ enhanceApp, enhanceComponent }: any) =>
       originalRenderPage({
-        enhanceApp: (App: any) => (props: any) => <App {...props} {...extraProps} />,
+        enhanceApp: (App: any) => (props: any) => {
+          const EnhancedApp = enhanceApp?.(App) || App;
+          return <EnhancedApp {...props} {...extraProps} />;
+        },
         enhanceComponent,
       });
 
