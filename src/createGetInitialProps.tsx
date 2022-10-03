@@ -1,4 +1,4 @@
-import NextDocument, { DocumentContext, DocumentInitialProps } from 'next/document.js'; // eslint-disable-line
+import NextDocument, { DocumentContext, DocumentInitialProps } from 'next/document';
 import { GLOBAL_NAME, PROP_NAME } from './constants';
 
 type CreateInitialState = (appProps: any) => any;
@@ -42,5 +42,5 @@ export const createGetInitialProps =
           }}
         />,
       ],
-    } as Omit<DocumentInitialProps, 'head'> & Required<{ head: DocumentInitialProps['head'] }>;
+    } as DocumentInitialProps & Pick<Required<DocumentInitialProps>, 'head'>;
   };

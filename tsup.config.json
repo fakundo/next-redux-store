@@ -1,6 +1,6 @@
 {
-  "entry": ["src/createUseStore.ts", "src/createGetInitialProps.tsx"],
-  "format": ["esm"],
+  "entry": ["src/index.ts", "src/createGetInitialProps.tsx"],
+  "format": ["cjs", "esm"],
   "sourcemap": true,
   "minify": true,
   "dts": true

@@ -1,20 +1,13 @@
 {
   "name": "next-redux-store",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "",
-  "type": "module",
-  "exports": {
-    "./createUseStore": "./dist/createUseStore.js",
-    "./createGetInitialProps": "./dist/createGetInitialProps.js"
-  },
-  "typesVersions": {
-    "*": {
-      "createUseStore": ["dist/createUseStore.d.ts"],
-      "createGetInitialProps": ["dist/createGetInitialProps.d.ts"]
-    }
-  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "files": [
-    "dist"
+    "dist",
+    "createGetInitialProps.js",
+    "createGetInitialProps.d.ts"
   ],
   "scripts": {
     "lint": "eslint src",
