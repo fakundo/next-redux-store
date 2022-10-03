@@ -1,7 +1,7 @@
 import NextDocument, { DocumentContext, DocumentInitialProps } from 'next/document';
 import { GLOBAL_NAME, PROP_NAME } from './constants';
 
-type CreateInitialState = (appProps: any) => any;
+type CreateInitialState = (appProps?: any, ctx?: DocumentContext) => any;
 
 export const createGetInitialProps =
   (createInitialState: CreateInitialState) => async (ctx: DocumentContext) => {
@@ -24,7 +24,7 @@ export const createGetInitialProps =
       // do nothing
     }
 
-    const state = await createInitialState(appData.props);
+    const state = await createInitialState(appData.props, ctx);
     const extraProps = { [PROP_NAME]: state };
 
     ctx.renderPage = ({ enhanceApp, enhanceComponent }: any) =>
