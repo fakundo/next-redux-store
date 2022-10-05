@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { GetStaticPropsContext } from 'next';
 import pokemonApi from 'modules/pokemonApi';
-import Image from 'next/image';
 import { makeStore } from 'modules/redux';
 
 interface PokemonPageProps {
@@ -24,12 +23,7 @@ export default function PokemonPage(props: PokemonPageProps) {
       {pokemon.isSuccess && (
         <>
           <h2>{pokemon.data.name}</h2>
-          <Image
-            src={pokemon.data.sprites.front_default}
-            alt={pokemon.data.name}
-            height={96}
-            width={96}
-          />
+          <img src={pokemon.data.sprites.front_default} alt={pokemon.data.name} />
         </>
       )}
       <hr />
