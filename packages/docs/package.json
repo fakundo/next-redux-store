@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "docs:dev": "next dev",
-    "docs:build": "next build && next export -o dist"
+    "docs:build": "next build && next export -o dist && touch dist/.nojekyll"
   },
   "dependencies": {
     "next-redux-store": "*",
