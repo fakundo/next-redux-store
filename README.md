@@ -30,7 +30,7 @@ npm i next-redux-store
 
 ## API
 
-### subtitle
+### Descr
 
 ```ts
 type TODO = {
