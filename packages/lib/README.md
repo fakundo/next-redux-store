@@ -6,8 +6,8 @@ Next integration with Redux.
 
 Features:
 - state data is passed to the client once when rendering the first page
-- does not load state between page transitions
-- does not use the HYDRATE action, instead uses preloadedState to configure store on the client once
+- does not load state data between page transitions
+- does not use the HYDRATE action, instead uses preloadedState to configure the store
 - SSG and SSR work great
 
 ## Installation
@@ -24,13 +24,14 @@ npm i next-redux-store
 
 ## Usage
 
-1. Configure your App to use Redux store 
+1. Configure your [custom App](https://nextjs.org/docs/advanced-features/custom-app) to use Redux store
 
 ```js
 import { makeStore, Provider } from 'modules/redux';
 import { createUseStore } from 'next-redux-store';
 import { AppProps } from 'next/app';
 
+// Note that makeStore must accept preloadedState as an argument
 const useStore = createUseStore(makeStore);
 
 export default function _App({ Component, pageProps, ...rest }: AppProps<any>) {
@@ -43,18 +44,16 @@ export default function _App({ Component, pageProps, ...rest }: AppProps<any>) {
 }
 ```
 
-2. Configure your Document to provide initial state for the App
+2. Configure your [custom Document](https://nextjs.org/docs/advanced-features/custom-document) to provide initial state for the App
 
 ```js
 import { makeStore } from 'modules/redux';
 import { createGetInitialProps } from 'next-redux-store/createGetInitialProps';
 
 const getInitialState = async (appProps, ctx) => {
-  if (!appProps) {
-    return undefined;
-  }
   const store = makeStore();
-  // fill the store considering the App props and Document context
+  // Fill the store considering the App props and Document context
+  // See example (https://github.com/fakundo/next-redux-store/blob/master/packages/docs/pages/_document.tsx#L14)
   return store.getState();
 }
 
@@ -83,7 +82,7 @@ const createUseStore: (makeStore: MakeStore) => (appProps: AppProps<any>) => Sto
 
 createGetInitialProps creates a function that returns initial props for the Document, providing initialState of store for the App.
 
-```ts
+```typescri
 type CreateInitialState = (appProps?: AppProps<any> | undefined, ctx?: DocumentContext) => any;
 const createGetInitialProps: (createInitialState: CreateInitialState) => (ctx: DocumentContext) => DocumentInitialProps;
 ```
