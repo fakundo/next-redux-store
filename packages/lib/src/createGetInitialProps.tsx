@@ -6,13 +6,13 @@ type CreateInitialState = (appProps?: AppProps<any> | undefined, ctx?: DocumentC
 
 export const createGetInitialProps =
   (createInitialState: CreateInitialState) => async (ctx: DocumentContext) => {
-    const appData = { props: undefined };
     const originalRenderPage = ctx.renderPage;
+    let appProps;
 
     ctx.renderPage = ({ enhanceApp, enhanceComponent }: any) =>
       originalRenderPage({
         enhanceApp: (App: any) => (props: any) => {
-          appData.props = props;
+          appProps = props;
           const EnhancedApp = enhanceApp?.(App) || App;
           return <EnhancedApp {...props} />;
         },
@@ -25,7 +25,7 @@ export const createGetInitialProps =
       // do nothing
     }
 
-    const state = await createInitialState(appData.props, ctx);
+    const state = await createInitialState(appProps, ctx);
     const extraProps = { [PROP_NAME]: state };
 
     ctx.renderPage = ({ enhanceApp, enhanceComponent }: any) =>

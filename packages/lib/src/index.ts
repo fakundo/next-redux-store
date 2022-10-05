@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
-import { PreloadedState, EnhancedStore } from '@reduxjs/toolkit';
 import { GLOBAL_NAME, PROP_NAME } from './constants';
 
-type MakeStore = (preloadedState?: PreloadedState<any>) => EnhancedStore;
+type MakeStore = (preloadedState?: any | undefined) => any;
 
 export const createUseStore = (makeStore: MakeStore) => (appProps: any) =>
   useMemo(() => {

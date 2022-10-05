@@ -1,0 +1,29 @@
+{
+  "name": "next-redux-store",
+  "version": "0.1.0",
+  "description": "Next integration with Redux",
+  "keywords": [
+    "next",
+    "redux",
+    "store"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist",
+    "createGetInitialProps.js",
+    "createGetInitialProps.d.ts"
+  ],
+  "scripts": {
+    "lib:lint": "eslint src",
+    "lib:watch": "tsup --watch",
+    "lib:build": "tsup --clean",
+    "prepublishOnly": "yarn run lint && yarn run build"
+  },
+  "author": "Roman Samoylov (https://github.com/fakundo)",
+  "license": "MIT",
+  "peerDependencies": {
+    "next": ">=10.0.0",
+    "react": ">=17.0.0"
+  }
+}

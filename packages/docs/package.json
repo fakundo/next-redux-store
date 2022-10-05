@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "docs",
+  "version": "0.0.0",
+  "scripts": {
+    "docs:dev": "next dev",
+    "docs:build": "next build && next export -o dist"
+  },
+  "dependencies": {
+    "next-redux-store": "*",
+    "react": "*",
+    "next": "*",
+    "react-redux": "*",
+    "@reduxjs/toolkit": "*"
+  }
+}

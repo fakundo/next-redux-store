@@ -1,4 +1,6 @@
-/dist
+.turbo
+.next
+dist
 
 # Node specific #
 #################
