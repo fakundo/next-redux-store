@@ -66,7 +66,7 @@ export default class _Document extends Document {
 }
 ```
 
-3. If you also would like to load state data for some pages  with their props (just like [next-redux-wrapper](https://github.com/kirill-konshin/next-redux-wrapper) works), you can return that state inside getStaticPaths / getServerSideProps functions. That state will be populated to the store with HYDRATE action. So do not forget to configure reducers to handle it.
+3. Optional if you also would like to load state data for some pages  with their props (just like [next-redux-wrapper](https://github.com/kirill-konshin/next-redux-wrapper) works), you can return that state inside getStaticPaths / getServerSideProps functions. That state will be populated to the store with HYDRATE action. So do not forget to configure reducers to handle it.
 
 ```js
 import { serverSideState } from 'next-redux-store/server';
