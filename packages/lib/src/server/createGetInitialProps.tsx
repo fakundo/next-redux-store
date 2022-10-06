@@ -2,7 +2,7 @@ import { AppProps } from 'next/app';
 import NextDocument, { DocumentContext, DocumentInitialProps } from 'next/document';
 import { GLOBAL_NAME, PROP_NAME } from '../constants';
 
-type CreateInitialState = (appProps?: AppProps<any> | undefined, ctx?: DocumentContext) => any;
+type CreateInitialState = (appProps: AppProps<any> | undefined, ctx: DocumentContext) => any;
 
 export const createGetInitialProps =
   (createInitialState: CreateInitialState) => async (ctx: DocumentContext) => {

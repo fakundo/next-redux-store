@@ -92,7 +92,7 @@ createUseStore creates a React hook that returns a Redux store.
 It accepts a store creation function with a preloadedState as parameter. The hook accepts App props.
 
 ```ts
-type MakeStore = (preloadedState?: any | undefined) => Store;
+type MakeStore = (preloadedState: any | undefined) => Store;
 const createUseStore: (makeStore: MakeStore) => (appProps: AppProps<any>) => Store;
 ```
 
@@ -101,7 +101,7 @@ const createUseStore: (makeStore: MakeStore) => (appProps: AppProps<any>) => Sto
 createGetInitialProps creates a function that returns initial props for the Document, providing initialState of store for the App.
 
 ```ts
-type CreateInitialState = (appProps?: AppProps<any> | undefined, ctx?: DocumentContext) => any;
+type CreateInitialState = (appProps: AppProps<any> | undefined, ctx: DocumentContext) => any;
 const createGetInitialProps: (createInitialState: CreateInitialState) => (ctx: DocumentContext) => DocumentInitialProps;
 ```
 

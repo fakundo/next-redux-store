@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { GLOBAL_NAME, PROP_NAME } from '../constants';
 import { useHydrate } from './useHydrate';
 
-type MakeStore = (preloadedState?: any | undefined) => any;
+type MakeStore = (preloadedState: any | undefined) => any;
 
 export const createUseStore = (makeStore: MakeStore) => (appProps: AppProps<any>) => {
   const store = useMemo(() => {

@@ -1,5 +1,5 @@
 {
-  "entry": ["src/client", "src/server"],
+  "entry": ["src/client/index.ts", "src/server/index.ts"],
   "format": ["cjs", "esm"],
   "sourcemap": true,
   "minify": true,
