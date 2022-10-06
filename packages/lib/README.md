@@ -5,9 +5,9 @@
 Next integration with Redux.
 
 Features:
-- state data is passed to the client once when rendering the first page
-- does not load state data between page transitions
-- does not use the HYDRATE action, instead uses preloadedState to configure the store
+- state can be passed to the client once on the first render
+- does not require to load state between page transitions
+- uses HYDRATE action only for pages that contain state in their props
 - SSG and SSR work great
 
 ## Installation
@@ -48,7 +48,7 @@ export default function _App({ Component, pageProps, ...rest }: AppProps<any>) {
 
 ```js
 import { makeStore } from 'modules/redux';
-import { createGetInitialProps } from 'next-redux-store/createGetInitialProps';
+import { createGetInitialProps } from 'next-redux-store/server';
 
 const getInitialState = async (appProps, ctx) => {
   const store = makeStore();
@@ -66,9 +66,26 @@ export default class _Document extends Document {
 }
 ```
 
+3. If you also would like to load state data for some pages  with their props (just like [next-redux-wrapper](https://github.com/kirill-konshin/next-redux-wrapper) works), you can return that state inside getStaticPaths / getServerSideProps functions. That state will be populated to the store with HYDRATE action. So do not forget to configure reducers to handle it.
+
+```js
+import { serverSideState } from 'next-redux-store/server';
+
+export const getStaticProps = async () => {
+  const store = makeStore();
+  // Fill the store
+  const initialState = store.getState();
+  return {
+    props: {
+      ...serverSideState(initialState),
+    },
+  };
+}
+```
+
 ## API
 
-### createUseStore
+### - createUseStore
 
 createUseStore creates a React hook that returns a Redux store.
 It accepts a store creation function with a preloadedState as parameter. The hook accepts App props.
@@ -78,16 +95,24 @@ type MakeStore = (preloadedState?: any | undefined) => Store;
 const createUseStore: (makeStore: MakeStore) => (appProps: AppProps<any>) => Store;
 ```
 
-### createGetInitialProps
+### - createGetInitialProps
 
 createGetInitialProps creates a function that returns initial props for the Document, providing initialState of store for the App.
 
-```typescri
+```ts
 type CreateInitialState = (appProps?: AppProps<any> | undefined, ctx?: DocumentContext) => any;
 const createGetInitialProps: (createInitialState: CreateInitialState) => (ctx: DocumentContext) => DocumentInitialProps;
 ```
 
 createInitialState can accept two parameters: App props and Document context.
+
+### - serverSideState
+
+serverSideState accepts state of the store and returns page props.
+
+### - HYDRATE
+
+HYDRATE returns hydration action name.
 
 ## License
 

@@ -1,5 +1,5 @@
 {
-  "entry": ["src/index.ts", "src/createGetInitialProps.tsx"],
+  "entry": ["src/client", "src/server"],
   "format": ["cjs", "esm"],
   "sourcemap": true,
   "minify": true,

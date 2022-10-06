@@ -10,18 +10,36 @@ export default function IndexPage() {
       {list.isLoading && <>loading pokemons</>}
       {list.isError && <>loading error</>}
       {list.isSuccess && (
-        <ul>
-          {list.data?.results.map(item => (
-            <li key={item.name}>
-              <Link href={`/${item.name}`}>
-                <a>{item.name}</a>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <>
+          <h3>Pages that load state data themselves:</h3>
+          <span>(but they are also statically generated on the server side)</span>
+          <hr />
+          <ul>
+            {list.data?.map(item => (
+              <li key={item.name}>
+                <Link href={`/${item.name}`}>
+                  <a>{item.name}</a>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <hr />
+          <h3>Pages with state passed to the page props:</h3>
+          <span>(but they are also statically generated on the server side)</span>
+          <hr />
+          <ul>
+            {list.data?.map(item => (
+              <li key={item.name}>
+                <Link href={`/with-state-in-props/${item.name}`}>
+                  <a>{item.name}</a>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
       <hr />
-      Check HTML of this page.
+      This page is also generated server side. Check the HTML.
     </>
   );
 }

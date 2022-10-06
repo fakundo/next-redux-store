@@ -4,8 +4,9 @@ import { AppProps } from 'next/app';
 
 const useStore = createUseStore(makeStore);
 
-export default function _App({ Component, pageProps, ...rest }: AppProps<any>) {
-  const store = useStore(rest);
+export default function _App(appProps: AppProps<any>) {
+  const { Component, pageProps } = appProps;
+  const store = useStore(appProps);
   return (
     <Provider store={store}>
       <Component {...pageProps} />

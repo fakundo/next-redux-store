@@ -1,14 +1,14 @@
 {
   "name": "next-redux-store",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Next integration with Redux",
   "keywords": [
     "next",
     "redux",
     "store"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/client/index.js",
+  "module": "dist/client/index.mjs",
   "files": [
     "dist",
     "createGetInitialProps.js",

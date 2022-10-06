@@ -23,11 +23,11 @@ export default function PokemonPage(props: PokemonPageProps) {
       {pokemon.isSuccess && (
         <>
           <h2>{pokemon.data.name}</h2>
-          <img src={pokemon.data.sprites.front_default} alt={pokemon.data.name} />
+          <img src={pokemon.data.image} alt={pokemon.data.name} />
         </>
       )}
       <hr />
-      Check HTML of this page.
+      This page is also generated server side. Check the HTML.
     </>
   );
 }
@@ -35,7 +35,7 @@ export default function PokemonPage(props: PokemonPageProps) {
 export async function getStaticPaths() {
   const store = makeStore();
   const list = await store.dispatch(pokemonApi.endpoints.getPokemonList.initiate({}));
-  const paths = list.data?.results.map(item => ({ params: { name: item.name } }));
+  const paths = list.data?.map(item => ({ params: { name: item.name } }));
   return {
     paths,
     fallback: false,
@@ -44,7 +44,7 @@ export async function getStaticPaths() {
 
 export function getStaticProps(ctx: GetStaticPropsContext) {
   const { params } = ctx;
-  const { name } = params || {};
+  const name = params?.name as string;
   return {
     props: {
       name,

@@ -2,7 +2,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "root": true,
   "compilerOptions": {
-    "baseUrl": ".",
     "allowJs": true,
     "composite": false,
     "declaration": true,

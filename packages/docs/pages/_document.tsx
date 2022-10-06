@@ -1,7 +1,7 @@
 import { makeStore } from 'modules/redux';
 import pokemonApi from 'modules/pokemonApi';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
-import { createGetInitialProps } from 'next-redux-store/createGetInitialProps';
+import { createGetInitialProps } from 'next-redux-store/server';
 import IndexPage from 'pages';
 import PokemonPage from './[name]';
 
