@@ -34,8 +34,9 @@ import { AppProps } from 'next/app';
 // Note that makeStore must accept preloadedState as an argument
 const useStore = createUseStore(makeStore);
 
-export default function _App({ Component, pageProps, ...rest }: AppProps<any>) {
-  const store = useStore(rest);
+export default function _App(appProps: AppProps<any>) {
+  const { Component, pageProps } = appProps;
+  const store = useStore(appProps);
   return (
     <Provider store={store}>
       <Component {...pageProps} />
