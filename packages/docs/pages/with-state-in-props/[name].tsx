@@ -1,6 +1,6 @@
 import { GetStaticPropsContext } from 'next';
 import pokemonApi from 'modules/pokemonApi';
-import { makeStore } from 'modules/redux';
+import { makeStore } from 'modules/makeStore';
 import { serverSideState } from 'next-redux-store/server';
 import PokemonPage, { getStaticPaths } from '../[name]';
 

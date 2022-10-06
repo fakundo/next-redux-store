@@ -1,11 +1,11 @@
-import { makeStore } from 'modules/redux';
+import { makeStore } from 'modules/makeStore';
 import pokemonApi from 'modules/pokemonApi';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { createGetInitialProps } from 'next-redux-store/server';
 import IndexPage from 'pages';
 import PokemonPage from './[name]';
 
-const getInitialProps = createGetInitialProps(async appProps => {
+const getInitialProps = createGetInitialProps(async (ctx, appProps) => {
   if (!appProps) {
     return undefined;
   }

@@ -1,5 +1,4 @@
 import { configureStore, PreloadedState } from '@reduxjs/toolkit';
-export { Provider } from 'react-redux';
 import pokemonApi from './pokemonApi';
 
 export const makeStore = (preloadedState?: PreloadedState<any>) =>

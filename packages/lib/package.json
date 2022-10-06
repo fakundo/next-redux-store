@@ -1,14 +1,14 @@
 {
   "name": "next-redux-store",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Next integration with Redux",
   "keywords": [
     "next",
     "redux",
     "store"
   ],
-  "main": "dist/client/index.js",
-  "module": "dist/client/index.mjs",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "files": [
     "dist",
     "server.js",
@@ -24,6 +24,7 @@
   "license": "MIT",
   "peerDependencies": {
     "next": ">=10.0.0",
-    "react": ">=17.0.0"
+    "react": ">=17.0.0",
+    "react-redux": ">=6.0.0"
   }
 }

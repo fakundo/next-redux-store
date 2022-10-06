@@ -1,15 +1,12 @@
-import { makeStore, Provider } from 'modules/redux';
-import { createUseStore } from 'next-redux-store';
 import { AppProps } from 'next/app';
-
-const useStore = createUseStore(makeStore);
+import { StoreProvider } from 'next-redux-store';
+import { makeStore } from 'modules/makeStore';
 
 export default function _App(appProps: AppProps<any>) {
   const { Component, pageProps } = appProps;
-  const store = useStore(appProps);
   return (
-    <Provider store={store}>
+    <StoreProvider makeStore={makeStore} appProps={appProps}>
       <Component {...pageProps} />
-    </Provider>
+    </StoreProvider>
   );
 }

@@ -27,20 +27,18 @@ npm i next-redux-store
 1. Configure your [custom App](https://nextjs.org/docs/advanced-features/custom-app) to use Redux store
 
 ```js
-import { makeStore, Provider } from 'modules/redux';
-import { createUseStore } from 'next-redux-store';
 import { AppProps } from 'next/app';
+import { StoreProvider } from 'next-redux-store';
+import { makeStore } from 'modules/makeStore';
 
 // Note that makeStore must accept preloadedState as an argument
-const useStore = createUseStore(makeStore);
-
+// See example (https://github.com/fakundo/next-redux-store/blob/master/packages/docs/modules/makeStore.tsx#L4)
 export default function _App(appProps: AppProps<any>) {
   const { Component, pageProps } = appProps;
-  const store = useStore(appProps);
   return (
-    <Provider store={store}>
+    <StoreProvider makeStore={makeStore} appProps={appProps}>
       <Component {...pageProps} />
-    </Provider>
+    </StoreProvider>
   );
 }
 ```
@@ -48,10 +46,10 @@ export default function _App(appProps: AppProps<any>) {
 2. Configure your [custom Document](https://nextjs.org/docs/advanced-features/custom-document) to provide initial state for the App
 
 ```js
-import { makeStore } from 'modules/redux';
+import { makeStore } from 'modules/makeStore';
 import { createGetInitialProps } from 'next-redux-store/server';
 
-const getInitialState = async (appProps, ctx) => {
+const getInitialState = async (ctx, appProps) => {
   const store = makeStore();
   // Fill the store considering the App props and Document context
   // See example (https://github.com/fakundo/next-redux-store/blob/master/packages/docs/pages/_document.tsx#L14)
@@ -67,7 +65,7 @@ export default class _Document extends Document {
 }
 ```
 
-3. Optional if you also would like to load state data for some pages  with their props (just like [next-redux-wrapper](https://github.com/kirill-konshin/next-redux-wrapper) works), you can return that state inside getStaticPaths / getServerSideProps functions. That state will be populated to the store with HYDRATE action. So do not forget to configure reducers to handle it.
+3. Optional if you also would like to load state data for some pages  with their props (just like [next-redux-wrapper](https://github.com/kirill-konshin/next-redux-wrapper) works), you can return that state inside getStaticPaths / getServerSideProps functions. That state will be populated to the store with HYDRATE action. So do not forget to configure reducers to handle it. See example (https://github.com/fakundo/next-redux-store/blob/master/packages/docs/modules/pokemonApi.tsx#L27)
 
 ```js
 import { serverSideState } from 'next-redux-store/server';
@@ -86,14 +84,14 @@ export const getStaticProps = async () => {
 
 ## API
 
-### - createUseStore
-
-createUseStore creates a React hook that returns a Redux store.
-It accepts a store creation function with a preloadedState as parameter. The hook accepts App props.
+### - StoreProvider props
 
 ```ts
-type MakeStore = (preloadedState: any | undefined) => Store;
-const createUseStore: (makeStore: MakeStore) => (appProps: AppProps<any>) => Store;
+import { ProviderProps } from 'react-redux';
+interface StoreProviderProps extends Omit<ProviderProps, 'store'> {
+  appProps: AppProps<any>;
+  makeStore: (preloadedState: any | undefined) => any;;
+}
 ```
 
 ### - createGetInitialProps
@@ -101,7 +99,7 @@ const createUseStore: (makeStore: MakeStore) => (appProps: AppProps<any>) => Sto
 createGetInitialProps creates a function that returns initial props for the Document, providing initialState of store for the App.
 
 ```ts
-type CreateInitialState = (appProps: AppProps<any> | undefined, ctx: DocumentContext) => any;
+type CreateInitialState = (ctx: DocumentContext, appProps: AppProps<any> | undefined) => any;
 const createGetInitialProps: (createInitialState: CreateInitialState) => (ctx: DocumentContext) => DocumentInitialProps;
 ```
 
@@ -113,7 +111,7 @@ serverSideState accepts state of the store and returns page props.
 
 ### - HYDRATE
 
-HYDRATE returns hydration action name.
+HYDRATE returns name of the hydration action.
 
 ## License
 
