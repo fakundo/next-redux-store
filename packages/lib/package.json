@@ -1,6 +1,6 @@
 {
   "name": "next-redux-store",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Next integration with Redux",
   "keywords": [
     "next",
@@ -11,8 +11,8 @@
   "module": "dist/client/index.mjs",
   "files": [
     "dist",
-    "createGetInitialProps.js",
-    "createGetInitialProps.d.ts"
+    "server.js",
+    "server.d.ts"
   ],
   "scripts": {
     "lib:lint": "eslint src",
