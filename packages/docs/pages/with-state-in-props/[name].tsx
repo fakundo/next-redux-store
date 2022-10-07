@@ -4,7 +4,9 @@ import { makeStore } from 'modules/makeStore';
 import { serverSideState } from 'next-redux-store/server';
 import PokemonPage, { getStaticPaths } from '../[name]';
 
-export default PokemonPage;
+export default function PokemonPageWSP(props: any) {
+  return <PokemonPage {...props} />;
+}
 
 export { getStaticPaths };
 

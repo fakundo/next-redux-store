@@ -10,39 +10,42 @@ export interface StoreProviderProps extends Omit<ProviderProps, 'store'> {
   makeStore: (preloadedState: any | undefined) => any;
 }
 
-const getPreloadedState = (appProps: AppProps<any>) => {
+const getPreloadedState = (props: StoreProviderProps) => {
+  const { appProps } = props;
   return (appProps as any)[PROP_NAME] || (globalThis as any)[GLOBAL_NAME];
 };
 
-const getStateFromPage = (appProps: AppProps<any>) => {
+const getStateFromPage = (props: StoreProviderProps) => {
+  const { appProps } = props;
   return appProps.pageProps[PROP_NAME];
 };
 
 export class StoreProvider extends Component<StoreProviderProps> {
   store: any;
 
+  lastStateFromPage: any;
+
   constructor(props: StoreProviderProps) {
     super(props);
-    const { makeStore, appProps } = props;
-    const preloadedState = getPreloadedState(appProps);
-    const stateFromPage = getStateFromPage(appProps);
+    const { makeStore } = props;
+    const preloadedState = getPreloadedState(props);
+    const stateFromPage = getStateFromPage(props);
     this.store = makeStore(preloadedState);
     this.hydrate(stateFromPage);
   }
 
-  shouldComponentUpdate({ appProps: nextAppProps }: StoreProviderProps) {
-    const { appProps } = this.props;
-    const stateFromPage = getStateFromPage(appProps);
-    const nextStateFromPage = getStateFromPage(nextAppProps);
-    if (stateFromPage !== nextStateFromPage) {
-      this.hydrate(nextStateFromPage);
-    }
+  shouldComponentUpdate = (nextProps: StoreProviderProps) => {
+    const nextStateFromPage = getStateFromPage(nextProps);
+    this.hydrate(nextStateFromPage);
     return true;
-  }
+  };
 
   hydrate = (payload: any) => {
-    if (payload) {
-      this.store.dispatch({ type: HYDRATE, payload });
+    if (payload !== this.lastStateFromPage) {
+      this.lastStateFromPage = payload;
+      if (payload) {
+        this.store.dispatch({ type: HYDRATE, payload });
+      }
     }
   };
 
