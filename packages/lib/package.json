@@ -1,6 +1,6 @@
 {
   "name": "next-redux-store",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Next integration with Redux",
   "keywords": [
     "next",
@@ -19,6 +19,10 @@
     "lib:watch": "tsup --watch",
     "lib:build": "tsup --clean",
     "prepublishOnly": "yarn run lib:lint && yarn run lib:build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fakundo/next-redux-store"
   },
   "author": "Roman Samoylov (https://github.com/fakundo)",
   "license": "MIT",
