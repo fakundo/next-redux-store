@@ -15,17 +15,16 @@ const getInitialProps = createGetInitialProps(async (ctx, appProps) => {
 
   switch (Component) {
     case IndexPage: {
-      store.dispatch(pokemonApi.endpoints.getPokemonList.initiate({}));
+      await store.dispatch(pokemonApi.endpoints.getPokemonList.initiate({}));
       break;
     }
     case PokemonPage: {
       const { name } = pageProps;
-      store.dispatch(pokemonApi.endpoints.getPokemonByName.initiate({ name }));
+      await store.dispatch(pokemonApi.endpoints.getPokemonByName.initiate({ name }));
       break;
     }
   }
 
-  await Promise.all(pokemonApi.util.getRunningOperationPromises());
   return store.getState();
 });
 

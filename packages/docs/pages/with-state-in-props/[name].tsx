@@ -15,8 +15,7 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
   const name = params?.name as string;
 
   const store = makeStore();
-  store.dispatch(pokemonApi.endpoints.getPokemonByName.initiate({ name }));
-  await Promise.all(pokemonApi.util.getRunningOperationPromises());
+  await store.dispatch(pokemonApi.endpoints.getPokemonByName.initiate({ name }));
   const initialState = store.getState();
 
   return {

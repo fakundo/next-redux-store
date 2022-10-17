@@ -2,6 +2,6 @@
   "entry": ["src/index.tsx", "src/server/index.ts"],
   "format": ["cjs", "esm"],
   "sourcemap": true,
-  "minify": false,
+  "minify": true,
   "dts": true
 }
