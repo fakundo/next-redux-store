@@ -9,22 +9,16 @@ export const createGetInitialProps =
     const originalRenderPage = ctx.renderPage;
     let appProps;
 
-    ctx.renderPage = ({ enhanceApp, enhanceComponent }: any) =>
+    ctx.renderPage = ({ enhanceComponent }: any) =>
       originalRenderPage({
-        enhanceApp: (App: any) => (props: any) => {
+        enhanceApp: () => (props: any) => {
           appProps = props;
-          const EnhancedApp = enhanceApp?.(App) || App;
-          return <EnhancedApp {...props} />;
+          return null;
         },
         enhanceComponent,
       });
 
-    try {
-      await NextDocument.getInitialProps(ctx);
-    } catch {
-      // do nothing
-    }
-
+    await NextDocument.getInitialProps(ctx);
     const state = await createInitialState(ctx, appProps);
     const extraProps = { [PROP_NAME]: state };
 
