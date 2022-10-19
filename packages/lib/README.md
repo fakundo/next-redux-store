@@ -6,7 +6,7 @@ Next integration with Redux.
 
 Features:
 - state can be passed to the client once on the first render
-- does not require to load state between page transitions
+- it's also possible to load page-level state between page transitions
 - uses HYDRATE action only for pages that contain state in their props
 - SSG and SSR work great
 
@@ -20,7 +20,7 @@ npm i next-redux-store
 
 [Demo with RTK Query](https://fakundo.github.io/next-redux-store/)
 /
-[Source](https://github.com/fakundo/next-redux-store/tree/master/packages/docs)
+[Source](https://github.com/fakundo/next-redux-store/blob/master/packages/docs)
 
 ## Usage
 
@@ -31,8 +31,6 @@ import { AppProps } from 'next/app';
 import { StoreProvider } from 'next-redux-store';
 import { makeStore } from 'modules/makeStore';
 
-// Note that makeStore must accept preloadedState as an argument
-// See example (https://github.com/fakundo/next-redux-store/blob/master/packages/docs/modules/makeStore.tsx#L4)
 export default function _App(appProps: AppProps<any>) {
   const { Component, pageProps } = appProps;
   return (
@@ -43,11 +41,14 @@ export default function _App(appProps: AppProps<any>) {
 }
 ```
 
+> **_NOTE:_** makeStore must accept preloadedState as an argument.
+See [example](https://github.com/fakundo/next-redux-store/blob/master/packages/docs/modules/makeStore.ts#L4).
+
 2. Configure your [custom Document](https://nextjs.org/docs/advanced-features/custom-document) to provide initial state for the App
 
 ```js
-import { makeStore } from 'modules/makeStore';
 import { createGetInitialProps } from 'next-redux-store/server';
+import { makeStore } from 'modules/makeStore';
 
 const getInitialState = async (ctx, appProps) => {
   const store = makeStore();
@@ -65,7 +66,7 @@ export default class _Document extends Document {
 }
 ```
 
-3. Optional if you also would like to load state data for some pages  with their props (just like [next-redux-wrapper](https://github.com/kirill-konshin/next-redux-wrapper) works), you can return that state inside getStaticPaths / getServerSideProps functions. That state will be populated to the store with HYDRATE action. So do not forget to configure reducers to handle it. See example (https://github.com/fakundo/next-redux-store/blob/master/packages/docs/modules/pokemonApi.tsx#L27)
+3. Optional if you also would like to load state data for some pages within their props (just like [next-redux-wrapper](https://github.com/kirill-konshin/next-redux-wrapper) works), you can return that state inside getStaticPaths / getServerSideProps functions. That state will be populated to the store with HYDRATE action. So do not forget to configure reducers to handle it. See [example](https://github.com/fakundo/next-redux-store/blob/master/packages/docs/modules/pokemonApi.ts#L27).
 
 ```js
 import { serverSideState } from 'next-redux-store/server';
@@ -84,32 +85,33 @@ export const getStaticProps = async () => {
 
 ## API
 
-### - StoreProvider props
+`import { StoreProvider } from 'next-redux-store'`
 
 ```ts
 import { ProviderProps } from 'react-redux';
 interface StoreProviderProps extends Omit<ProviderProps, 'store'> {
   appProps: AppProps<any>;
-  makeStore: (preloadedState: any | undefined) => any;;
+  makeStore: (preloadedState: any | undefined) => any;
 }
+declare class StoreProvider extends Component<StoreProviderProps> {}
 ```
 
-### - createGetInitialProps
+`import { createGetInitialProps } from 'next-redux-store/server';`
 
-createGetInitialProps creates a function that returns initial props for the Document, providing initialState of store for the App.
+Function createGetInitialProps creates a function that returns initial props for the Document, providing initial state of the store for the App.
 
 ```ts
 type CreateInitialState = (ctx: DocumentContext, appProps: AppProps<any> | undefined) => any;
 const createGetInitialProps: (createInitialState: CreateInitialState) => (ctx: DocumentContext) => DocumentInitialProps;
 ```
 
-createInitialState can accept two parameters: App props and Document context.
+Function createInitialState accepts Document context and App props as parameters and returns initial state of the store.
 
-### - serverSideState
+`import { serverSideState } from 'next-redux-store/server';`
 
-serverSideState accepts state of the store and returns page props.
+Function serverSideState accepts state of the store and returns page props.
 
-### - HYDRATE
+`import { HYDRATE } from 'next-redux-store';`
 
 HYDRATE returns name of the hydration action.
 
