@@ -1,16 +1,16 @@
 import { AppProps } from 'next/app';
 import { Component } from 'react';
-import { Provider, ProviderProps } from 'react-redux';
+import { Provider, ProviderProps, useStore } from 'react-redux';
 import { GLOBAL_NAME, PROP_NAME } from './constants';
 
 export const HYDRATE = 'NEXT_REDUX_STORE_HYDRATE_ACTION';
 
 export interface StoreProviderProps extends Omit<ProviderProps, 'store'> {
   appProps: AppProps<any>;
-  makeStore: (preloadedState: any | undefined) => any;
+  store: ReturnType<typeof useStore<any>>;
 }
 
-const getPreloadedState = (props: StoreProviderProps) => {
+const getStateFromDoc = (props: StoreProviderProps) => {
   const { appProps } = props;
   return (appProps as any)[PROP_NAME] || (globalThis as any)[GLOBAL_NAME];
 };
@@ -27,10 +27,11 @@ export class StoreProvider extends Component<StoreProviderProps> {
 
   constructor(props: StoreProviderProps) {
     super(props);
-    const { makeStore } = props;
-    const preloadedState = getPreloadedState(props);
+    const { store } = props;
+    this.store = store;
+    const stateFromDoc = getStateFromDoc(props);
     const stateFromPage = getStateFromPage(props);
-    this.store = makeStore(preloadedState);
+    this.hydrate(stateFromDoc);
     this.hydrate(stateFromPage);
   }
 
@@ -50,7 +51,7 @@ export class StoreProvider extends Component<StoreProviderProps> {
   };
 
   render() {
-    const { makeStore, appProps, ...rest } = this.props;
+    const { store, appProps, ...rest } = this.props;
     return <Provider store={this.store} {...rest} />;
   }
 }

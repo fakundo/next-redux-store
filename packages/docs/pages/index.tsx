@@ -11,8 +11,10 @@ export default function IndexPage() {
       {list.isError && <>loading error</>}
       {list.isSuccess && (
         <>
-          <h3>Pages that load state data themselves:</h3>
-          <span>(but they are also statically generated on the server side)</span>
+          <p>
+            Pages below load data and fill the store on the client. But if you open them directly,
+            data will be hydrated.
+          </p>
           <hr />
           <ul>
             {list.data?.map(item => (
@@ -24,8 +26,7 @@ export default function IndexPage() {
             ))}
           </ul>
           <hr />
-          <h3>Pages with state passed to the page props:</h3>
-          <span>(but they are also statically generated on the server side)</span>
+          <p>Pages below get store data from `getStaticProps` mechanism.</p>
           <hr />
           <ul>
             {list.data?.map(item => (

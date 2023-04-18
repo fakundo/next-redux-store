@@ -23,7 +23,6 @@ const pokemonApi = createApi({
       transformResponse: ({ name, sprites }: any) => ({ name, image: sprites.front_default }),
     }),
   }),
-  // Handler for the HYDRATE action is only required for pages with the state passed to their props
   extractRehydrationInfo: (action, { reducerPath }) => {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];
