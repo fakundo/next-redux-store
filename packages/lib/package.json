@@ -1,6 +1,6 @@
 {
   "name": "next-redux-store",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "Next integration with Redux",
   "keywords": [
     "next",

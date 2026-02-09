@@ -38,9 +38,9 @@ export const createGetInitialProps =
       head: [
         ...(initialProps.head || []),
         <script
-          dangerouslySetInnerHTML={{
-            __html: `window.${GLOBAL_NAME}=${JSON.stringify(state)};`,
-          }}
+          type="application/json"
+          id={GLOBAL_NAME}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(state) }}
         />,
       ],
     } as DocumentInitialProps & Pick<Required<DocumentInitialProps>, 'head'>;

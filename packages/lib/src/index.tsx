@@ -1,9 +1,9 @@
 import { AppProps } from 'next/app';
 import { Component } from 'react';
 import { Provider, ProviderProps, useStore } from 'react-redux';
-import { GLOBAL_NAME, PROP_NAME } from './constants';
+import { GLOBAL_NAME, PROP_NAME, HYDRATE } from './constants';
 
-export const HYDRATE = 'NEXT_REDUX_STORE_HYDRATE_ACTION';
+export { HYDRATE };
 
 export interface StoreProviderProps extends Omit<ProviderProps, 'store'> {
   appProps: AppProps<any>;
@@ -12,7 +12,12 @@ export interface StoreProviderProps extends Omit<ProviderProps, 'store'> {
 
 const getStateFromDoc = (props: StoreProviderProps) => {
   const { appProps } = props;
-  return (appProps as any)[PROP_NAME] || (globalThis as any)[GLOBAL_NAME];
+  return (
+    (appProps as any)[PROP_NAME] ||
+    ('document' in (globalThis as any)
+      ? JSON.parse(document.getElementById(`${GLOBAL_NAME}`)?.textContent || '{}')
+      : {})
+  );
 };
 
 const getStateFromPage = (props: StoreProviderProps) => {
