@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app';
 import NextDocument, { DocumentContext, DocumentInitialProps } from 'next/document';
-import { GLOBAL_NAME, PROP_NAME } from '../constants';
+import { SCRIPT_ID, PROP_NAME } from '../constants';
 
 type CreateInitialState = (ctx: DocumentContext, appProps: AppProps<any> | undefined) => any;
 
@@ -39,7 +39,7 @@ export const createGetInitialProps =
         ...(initialProps.head || []),
         <script
           type="application/json"
-          id={GLOBAL_NAME}
+          id={SCRIPT_ID}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(state) }}
         />,
       ],

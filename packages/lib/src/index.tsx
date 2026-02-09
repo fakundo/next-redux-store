@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app';
 import { Component } from 'react';
 import { Provider, ProviderProps, useStore } from 'react-redux';
-import { GLOBAL_NAME, PROP_NAME, HYDRATE } from './constants';
+import { SCRIPT_ID, PROP_NAME, HYDRATE } from './constants';
 
 export { HYDRATE };
 
@@ -15,7 +15,7 @@ const getStateFromDoc = (props: StoreProviderProps) => {
   return (
     (appProps as any)[PROP_NAME] ||
     ('document' in (globalThis as any)
-      ? JSON.parse(document.getElementById(`${GLOBAL_NAME}`)?.textContent || '{}')
+      ? JSON.parse(document.getElementById(SCRIPT_ID)?.textContent || '{}')
       : {})
   );
 };
