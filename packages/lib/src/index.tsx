@@ -10,14 +10,15 @@ export interface StoreProviderProps extends Omit<ProviderProps, 'store'> {
   store: ReturnType<typeof useStore<any>>;
 }
 
+let STATE_FROM_SCRIPT: any;
+
+try {
+  STATE_FROM_SCRIPT = JSON.parse(document.getElementById(SCRIPT_ID)!.textContent!);
+} catch {}
+
 const getStateFromDoc = (props: StoreProviderProps) => {
   const { appProps } = props;
-  return (
-    (appProps as any)[PROP_NAME] ||
-    ('document' in (globalThis as any)
-      ? JSON.parse(document.getElementById(SCRIPT_ID)?.textContent || '{}')
-      : {})
-  );
+  return (appProps as any)[PROP_NAME] || STATE_FROM_SCRIPT;
 };
 
 const getStateFromPage = (props: StoreProviderProps) => {
